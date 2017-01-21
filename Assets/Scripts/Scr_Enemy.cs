@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Scr_Enemy : MonoBehaviour
 {
+
     public Sprite Light5, Light4, Light3, Light2, Light1;
-    public int iEnemyHP = 5;
+    public int EnemyHP = 5;
     private float fRadio = 1.42f;
 
     //Use this for initialization
@@ -22,27 +23,8 @@ public class Scr_Enemy : MonoBehaviour
 
     public void vChangeSprite()
     {
-        switch (iEnemyHP)
-        {
-            case 1:
-                gameObject.GetComponent<SpriteRenderer>().sprite = Light1;
-                break;
-            case 2:
-                gameObject.GetComponent<SpriteRenderer>().sprite = Light2;
-                break;
-            case 3:
-                gameObject.GetComponent<SpriteRenderer>().sprite = Light3;
-                break;
-            case 4:
-                gameObject.GetComponent<SpriteRenderer>().sprite = Light4;
-                break;
-            case 5:
-                gameObject.GetComponent<SpriteRenderer>().sprite = Light5;
-                break;
-            default:
-                Invoke("vAutoDestroy", 0.5f/*anim.clip.length*/);
-                break;
-        }
+        gameObject.GetComponent<Animator>().SetInteger("iEnemyHp", EnemyHP);
+        if (EnemyHP <= 0)Invoke("vAutoDestroy", 0.5f/*anim.clip.length*/);        
     }
 
     void vAutoDestroy()
@@ -61,7 +43,7 @@ public class Scr_Enemy : MonoBehaviour
         Debug.Log("distancia: " + fDistancia);
         if (fDistancia <= fRadio)
         {
-            iEnemyHP -= (int)Mathf.Ceil((1 - (fDistancia / fRadio)) * 5.0f);
+            EnemyHP -= (int)Mathf.Ceil((1 - (fDistancia / fRadio)) * 5.0f);
             Debug.Log((1 - (fDistancia / fRadio)) * 5.0f);
             Debug.Log((1 - (fDistancia / fRadio)));
             Debug.Log((int)Mathf.Ceil((1 - (fDistancia / fRadio)) * 5.0f));
