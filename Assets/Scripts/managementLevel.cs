@@ -8,11 +8,12 @@ public class managementLevel : MonoBehaviour
     public GameObject goLevelsInfo;
     Vector2 Vect2TouchAttack;
     public GameObject goEnemyStatic;
+    public int iNumberNv = 0;
 
     // Use this for initialization
     void Start ()
     {
-        CreateLevel(1);
+        CreateLevel(0);
     }
 
     // Update is called once per frame
@@ -44,6 +45,11 @@ public class managementLevel : MonoBehaviour
 
     void CreateLevel(int nevel)
     {
+        goEnemies = GameObject.FindGameObjectsWithTag("enemy");
+        foreach (GameObject enemy in goEnemies)
+        {
+            Destroy(enemy);
+        }
         levels levelsInfo = goLevelsInfo.GetComponent<levels>();
         int numberOfEnemies = levelsInfo.levelsInfo[nevel].iNumberEnemies;
         for (int i = 0; i < numberOfEnemies; i++)
@@ -51,5 +57,13 @@ public class managementLevel : MonoBehaviour
             GameObject newEnemy = Instantiate(goEnemyStatic, new Vector3(levelsInfo.levelsInfo[nevel].enemies[i].vector2Position.x/30, levelsInfo.levelsInfo[nevel].enemies[i].vector2Position.y/30, 0), Quaternion.identity);
             newEnemy.GetComponent<Scr_Enemy>().EnemyHP = levelsInfo.levelsInfo[nevel].enemies[i].life;
         }
+    }
+
+    public void nextLevel()
+    {
+        iNumberNv++;
+        if (iNumberNv >= 10)
+            iNumberNv = 0;
+        CreateLevel(iNumberNv);
     }
 }
