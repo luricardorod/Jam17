@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class managementLevel : MonoBehaviour
 {
-    public GameObject[] goEnemies;
-    public Vector2 Vect2TouchAttack;
+    GameObject[] goEnemies;
+    public GameObject goLevelsInfo;
+    Vector2 Vect2TouchAttack;
+    public GameObject goEnemyStatic;
+
     // Use this for initialization
     void Start ()
     {
-        goEnemies = GameObject.FindGameObjectsWithTag("enemie");
+        CreateLevel(0);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         if (Input.touchCount > 0)
         {
@@ -30,6 +33,7 @@ public class managementLevel : MonoBehaviour
                     break;
                 // Report that a direction has been chosen when the finger is lifted.
                 case TouchPhase.Ended:
+                    goEnemies = GameObject.FindGameObjectsWithTag("enemy");
                     Vect2TouchAttack = tTouch.position;
 
                     foreach (GameObject enemy in goEnemies)
@@ -40,19 +44,33 @@ public class managementLevel : MonoBehaviour
                     break;
             }
         }
-        /*
+        
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
+            CreateLevel(0);
+
+            goEnemies = GameObject.FindGameObjectsWithTag("enemy");
             Vect2TouchAttack = Input.mousePosition;
             Debug.Log("Click pressed (left or rigth).");
 
-            foreach (GameObject enemy in enemies)
+            Debug.Log(goEnemies.Length);
+            foreach (GameObject enemy in goEnemies)
             {
                 //if (enemy.getLife() > 0)
                 //Ejecutar funcion de hacer daño
                 //enemy.GetDamage(Vect2TouchAttack);
             }
         }
-        */
+        
+    }
+
+    void CreateLevel(int nevel)
+    {
+        levels levelsInfo = goLevelsInfo.GetComponent<levels>();
+        int numberOfEnemies = levelsInfo.levelsInfo[nevel].iNumberEnemies;
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            GameObject newEnemy = Instantiate(goEnemyStatic, new Vector3(levelsInfo.levelsInfo[nevel].enemies[i].vector2Position.x/30, levelsInfo.levelsInfo[nevel].enemies[i].vector2Position.y/30, 0), Quaternion.identity);
+        }
     }
 }
