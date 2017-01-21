@@ -8,7 +8,6 @@ public class managementLevel : MonoBehaviour
     public GameObject goLevelsInfo;
     Vector2 Vect2TouchAttack;
     public GameObject goEnemyStatic;
-    private bool flag = false;
 
     // Use this for initialization
     void Start ()
@@ -26,7 +25,7 @@ public class managementLevel : MonoBehaviour
             Vect2TouchAttack = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log("Click pressed (left or rigth).");
 
-            this.GetComponent<Animator>().SetBool("bTouch", true);
+            this.GetComponent<Animator>().SetBool("tTouch", true);
             this.transform.position = Vect2TouchAttack;
 
 
