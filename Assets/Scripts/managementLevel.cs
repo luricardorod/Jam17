@@ -12,7 +12,7 @@ public class managementLevel : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        CreateLevel(0);
+        CreateLevel(1);
     }
 
     // Update is called once per frame
@@ -47,15 +47,14 @@ public class managementLevel : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
-            CreateLevel(0);
-
             goEnemies = GameObject.FindGameObjectsWithTag("enemy");
-            Vect2TouchAttack = Input.mousePosition;
+            Vect2TouchAttack = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log("Click pressed (left or rigth).");
 
             Debug.Log(goEnemies.Length);
             foreach (GameObject enemy in goEnemies)
             {
+                enemy.GetComponent<Scr_Enemy>().DoDamage(Vect2TouchAttack);
                 //if (enemy.getLife() > 0)
                 //Ejecutar funcion de hacer daño
                 //enemy.GetDamage(Vect2TouchAttack);
@@ -71,6 +70,7 @@ public class managementLevel : MonoBehaviour
         for (int i = 0; i < numberOfEnemies; i++)
         {
             GameObject newEnemy = Instantiate(goEnemyStatic, new Vector3(levelsInfo.levelsInfo[nevel].enemies[i].vector2Position.x/30, levelsInfo.levelsInfo[nevel].enemies[i].vector2Position.y/30, 0), Quaternion.identity);
+            newEnemy.GetComponent<Scr_Enemy>().iEnemyHP = levelsInfo.levelsInfo[nevel].enemies[i].life;
         }
     }
 }

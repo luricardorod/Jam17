@@ -6,10 +6,10 @@ public class Scr_Enemy : MonoBehaviour
 {
     public Sprite Light5, Light4, Light3, Light2, Light1;
     public int iEnemyHP = 5;
-    public int iRadio = 150;
+    private float fRadio = 1.42f;
 
     //Use this for initialization
-    void Start() { }
+    void Start() { vChangeSprite(); }
 
     //Update is called once per frame
     void Update() { }
@@ -19,42 +19,28 @@ public class Scr_Enemy : MonoBehaviour
     {
         return Mathf.Sqrt((Vector.x * Vector.x) + (Vector.y * Vector.y));
     }
-    /*
-     * Light5.png
-     * Light4.png
-     * Light3.png
-     * Light2.png
-     * Light1.png
-     */
+
     public void vChangeSprite()
     {
         switch (iEnemyHP)
         {
-            case 0:
-                //Codigo de cambiar sprite
-                //Invoke("vAutoDestroy", /*anim.clip.length*/);
-                break;
             case 1:
-                //Codigo de cambiar sprite
                 gameObject.GetComponent<SpriteRenderer>().sprite = Light1;
                 break;
             case 2:
-                //Codigo de cambiar sprite
                 gameObject.GetComponent<SpriteRenderer>().sprite = Light2;
                 break;
             case 3:
-                //Codigo de cambiar sprite
                 gameObject.GetComponent<SpriteRenderer>().sprite = Light3;
                 break;
             case 4:
-                //Codigo de cambiar sprite
                 gameObject.GetComponent<SpriteRenderer>().sprite = Light4;
                 break;
             case 5:
-                //Codigo de cambiar sprite
                 gameObject.GetComponent<SpriteRenderer>().sprite = Light5;
                 break;
             default:
+                Invoke("vAutoDestroy", 0.5f/*anim.clip.length*/);
                 break;
         }
     }
@@ -70,18 +56,17 @@ public class Scr_Enemy : MonoBehaviour
         Vector2 Pos = transform.position;
 
         float fDistancia = iMagnitud(Pos - Touch);
-        if (fDistancia < iRadio)
+        Debug.Log("pos: " + Pos.x + " " + Pos.y);
+        Debug.Log("touch: " + Touch.x + " " + Touch.y);
+        Debug.Log("distancia: " + fDistancia);
+        if (fDistancia <= fRadio)
         {
-            iEnemyHP -= (int)Mathf.Ceil((1 - (fDistancia / iRadio)) * 5);
-        }
-        //Comprueba si el enemigo está muerto
-        if (iEnemyHP <= 0)
-        {
+            iEnemyHP -= (int)Mathf.Ceil((1 - (fDistancia / fRadio)) * 5.0f);
+            Debug.Log((1 - (fDistancia / fRadio)) * 5.0f);
+            Debug.Log((1 - (fDistancia / fRadio)));
+            Debug.Log((int)Mathf.Ceil((1 - (fDistancia / fRadio)) * 5.0f));
 
-        }
-        else
-        {
-
+            vChangeSprite();
         }
     }
 }

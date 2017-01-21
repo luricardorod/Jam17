@@ -37,6 +37,13 @@ public class levels : MonoBehaviour {
         levelsInfo[0].enemies[4].life = 5;
         levelsInfo[0].enemies[4].vector2Position.x = 60;
         levelsInfo[0].enemies[4].vector2Position.y = -60;
+
+        levelsInfo[1].iNumberBombs = 2;
+        levelsInfo[1].iNumberEnemies = 1;
+        levelsInfo[1].enemies = new enemy[levelsInfo[1].iNumberEnemies];
+        levelsInfo[1].enemies[0].life = 5;
+        levelsInfo[1].enemies[0].vector2Position.x = 0;
+        levelsInfo[1].enemies[0].vector2Position.y = 0;
     }
 
 
